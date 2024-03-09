@@ -8,31 +8,34 @@
   </head>
   <body>
 
-    <nav id="nav" class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-
-			<!-- Brand -->
-			<a class="navbar-brand ml-1 mr-5" href="./index.html"><h4>Inicio</h4></a>
-
-			<!-- Aquí se define el botón Toggler/colapse -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#colapsaNavbar">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<!-- Navbar links -->
-			<div class="collapse navbar-collapse" id="colapsaNavbar">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link ml-5 mr-5" href="./acerca.html"><h4>Mis proyectos</h4></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link ml-5 mr-5" href="./otros.html"><h4>Mis cursos</h4></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link ml-5 mr-1" href="#contacto"><h4>Contacto</h4></a>
-					</li>
-				</ul>
-			</div>
-		</nav>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    
+      <!-- Brand -->
+      <a class="navbar-brand ml-1 mr-5" href="./index.html">
+        <h4>Inicio</h4>
+      </a>
+    
+      <!-- Aquí se define el botón Toggler/colapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#colapsaNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="colapsaNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link ml-5 mr-5" href="./acerca.html">
+              <h4>Mis proyectos</h4>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-5 mr-5" href="./otros.html">
+              <h4>Mis cursos</h4>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <br>
     <br>
 <!--
@@ -51,10 +54,12 @@
           <div class="shadow-lg mb-5 bg-white rounded text-dark">
             <div class="row">
               <div class="col-sm-6">
-                <video class="img-fluid img-thumbnail rounded" src="src/img/zombie.webm" controls></video>
+                <video autoplay loop muted class="img-fluid img-thumbnail rounded" src="src/img/zombie.webm">
+                  <p>Sorry, Your Browser Doesn't Support Embedded Videos.</p>
+                </video>
               </div>
               <div class="col-sm-6 mt-5">
-                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Enemy logic and spawning</h3>
+                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Enemy logic and spawning</h3><br><br>
                 <h6>Último juego realizado para la sociedad de desarrollo en videojuegos, usando UE5 y blueprints</h6>
               </div>
             </div>
@@ -67,10 +72,39 @@
                   Unreal Engine para renderizar</h3>
                   <br><br>
                 </h3>
-                <h6>Diseño de escenas y escenarios renderizados en Unreal Engine 5.X, los videos están disponibles bajo petición</h6>
+                <h6 class="text-center border-left">Diseño de escenas y escenarios renderizados en Unreal Engine 5.X, los videos están disponibles bajo petición</h6>
               </div>
               <div class="col-sm-6">
                 <img class=" img-thumbnail rounded img-fluid" src="src/img/masonry.gif">
+              </div>
+            </div>
+          </div>
+
+          <div class="shadow-lg mb-5 bg-white rounded text-dark">
+            <div class="row">
+              <div class="col-sm-6">
+                <video autoplay loop muted class="img-fluid img-thumbnail rounded" src="src/img/*.webm">
+                  <p>Sorry, Your Browser Doesn't Support Embedded Videos.</p>
+                </video>
+              </div>
+              <div class="col-sm-6 mt-5">
+                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Recreando God of War</h3><br><br>
+                <h6 class="text-center border-left"></h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="shadow-lg mb-5 bg-white rounded text-dark">
+            <div class="row">
+              <div class="col-sm-6 mt-5">
+                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Primal origins VR</h3><br><br>
+                <h6 class="text-center border-left">Juego VR centrado en supervivencia por oleadas en realidad virtual, para la GGJ 2023
+                  (<a href="https://v3.globalgamejam.org/2023/games/primal-origins-vr-5">enlace</a>)</h6>
+              </div>
+              <div class="col-sm-6">
+                <video autoplay loop muted class="img-fluid img-thumbnail rounded" src="src/img/primal.webm">
+                  <p>Sorry, Your Browser Doesn't Support Embedded Videos.</p>
+                </video>
               </div>
             </div>
           </div>
@@ -83,7 +117,7 @@
               <div class="col-sm-6 mt-5">
                 <h3 class="mt-md-5 mt-sm-1 text-center align-center">Procedural animation on C#<br><br>
                 </h3>
-                <h6>Únicamente usando código logre hacer el movimiento de un boss final del juego Hell of Stamen, de SODVI</h6>
+                <h6 class="text-center border-right">Únicamente usando código logré hacer el movimiento de un boss final del juego Hell of Stamen, de SODVI</h6>
               </div>
             </div>
           </div>
@@ -95,7 +129,7 @@
                     href="https://ghero56.itch.io/curlingenieros">
                     curlINGenieros</a><br><br>
                 </h3>
-                <h6>Es un juego hecho en Unity durante la gamejam de 24 horas de la Facultad de Ingeniería</h6>
+                <h6 class="text-center border-left">Es un juego hecho en Unity durante la gamejam de 24 horas de la Facultad de Ingeniería</h6>
               </div>
               <div class="col-sm-6">
                 <img class=" img-thumbnail rounded img-fluid" src="src/img/curling1.png">
@@ -107,11 +141,11 @@
           <div class="shadow-lg mb-5 bg-white rounded text-dark">
             <div class="row">
               <div class="col-sm-6">
-                <img class=" img-thumbnail rounded img-fluid" src="src/img/job.gif">
+                <img class=" img-thumbnail rounded img-fluid" src="src/img/aliat.gif">
               </div>
               <div class="col-sm-6 mt-5">
-                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Simulador de laboratorio 3D</h3>
-                <h6>Este proyecto fue desarrollado en Unity para Aliat Universidades</h6>
+                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Simulador de laboratorio 3D</h3><br><br>
+                <h6 class="text-center border-right">Este proyecto fue desarrollado en Unity para Aliat Universidades</h6>
               </div>
             </div>
           </div>
@@ -133,7 +167,8 @@
                 <img class="img-fluid img-thumbnail rounded" src="src/img/pong.png">
               </div>
               <div class="col-sm-6 mt-5">
-                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Pong en TASM</h3>
+                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Pong en TASM</h3><br><br>
+                <h6 class="text-center border-right">Este fue un proyecto de la materia de arquitectura de computadoras, hecho en TASM</h6>
               </div>
             </div>
           </div>
@@ -141,7 +176,8 @@
           <div class="shadow-lg mb-5 bg-white rounded text-dark">
             <div class="row">
               <div class="col-sm-6 mt-5">
-                <h3 class="mt-md-5 mt-sm-1 text-center align-center">PlaneGame</h3>
+                <h3 class="mt-md-5 mt-sm-1 text-center align-center">PlaneGame</h3><br><br>
+                <h6 class="text-center border-left">Uno de mis primeros juegos en la SODVI, con un estilo flappy bird y arte low poly, hecho en 2019</h6>
               </div>
               <div class="col-sm-6">
                 <img class=" img-thumbnail rounded img-fluid" src="src/img/game.jpg">
@@ -155,20 +191,8 @@
                 <img class="img-fluid img-thumbnail rounded" src="src/img/blend.jpg">
               </div>
               <div class="col-sm-6 mt-5">
-                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Rendering en blender</h3>
-                <h6>Modelado y renderizado de escenas y objetos en Blender para todo tipo de índole</h6>
-              </div>
-            </div>
-          </div>
-
-          <div class="shadow-lg mb-5 bg-white rounded text-dark">
-            <div class="row">
-              <div class="col-sm-6 mt-5">
-                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Primal origins VR</h3>
-                <h6>Juego VR centrado en supervivencia por oleadas en realidad virtual, para la GGJ 2023 (<a href="https://v3.globalgamejam.org/2023/games/primal-origins-vr-5">enlace</a>)</h6>
-              </div>
-              <div class="col-sm-6">
-                <img class="img-fluid img-thumbnail rounded" src="src/img/primal.webp">
+                <h3 class="mt-md-5 mt-sm-1 text-center align-center">Rendering en blender</h3><br><br>
+                <h6 class="text-center border-right">Modelado y renderizado de escenas y objetos en Blender, esta es imagen es de bubble game, un escenario para otro juego que hice en SODVI</h6>
               </div>
             </div>
           </div>
@@ -177,10 +201,7 @@
       </div>
     </div>
 
-<br>
-<br>
-<br>
-    <footer id="contacto">
+    <footer id="rollback">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
@@ -188,7 +209,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <a class="navbar-brand ml-1 mr-5" href="./index.html">
-                    <h4>Regresar al inicio</h4>
+                    <h2>Regresar al inicio</h2>
                   </a>
                 </div>
               </div>
