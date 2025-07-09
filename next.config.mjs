@@ -1,13 +1,13 @@
-/* 
-* @type {import('next').NextConfig} 
-* 
-*/
+/*
+ * @type {import('next').NextConfig}
+ *
+ */
 const nextConfig = {
-    output: 'standalone',
-    distDir: 'build',
-    images: {
-        unoptimized: false,
-    },
+  output: "standalone",
+  distDir: "build",
+  images: {
+    unoptimized: false,
+  },
 };
 
 export default nextConfig;

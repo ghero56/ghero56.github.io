@@ -10,3 +10,5 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - MUI
 - React Flow
 - Prettier
+
+## Last update 07/08/2025
