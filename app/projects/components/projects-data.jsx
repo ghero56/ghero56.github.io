@@ -163,6 +163,39 @@ const DataSoftware = [
     platform: "x64 (C++, OpenGL)",
     year: "2025",
   },
+  {
+    title: "AeroLaundry",
+    imgUrl: [
+      "/images/projects/software/aerolaundry/image1.webp",
+      "/images/projects/software/aerolaundry/image2.webp",
+      "/images/projects/software/aerolaundry/image3.webp",
+    ],
+    description:
+      "Web application for managing a laundry service, with order tracking and a clean, responsive interface.",
+    descriptionEs:
+      "Aplicación web para la gestión de un servicio de lavandería, con seguimiento de pedidos y una interfaz limpia y responsiva.",
+    source: "/aerolaundry",
+    platform: "Web",
+    year: "2025",
+  },
+  {
+    title: "Cursos PyM",
+    imgUrl: [
+      "/images/projects/software/cursos-pym/image1.webp",
+      "/images/projects/software/cursos-pym/image2.webp",
+      "/images/projects/software/cursos-pym/image3.webp",
+      "/images/projects/software/cursos-pym/image4.webp",
+      "/images/projects/software/cursos-pym/image5.webp",
+      "/images/projects/software/cursos-pym/image6.webp",
+    ],
+    description:
+      "Online learning platform with JWT authentication, roles, video streaming and real-time chat. Built with Next.js, Flask and MongoDB.",
+    descriptionEs:
+      "Plataforma de cursos en línea con autenticación JWT, roles, streaming de video y chat en tiempo real. Hecha con Next.js, Flask y MongoDB.",
+    source: "/pym-front",
+    platform: "Web (Next.js, Flask, MongoDB)",
+    year: "2025",
+  },
 ];
 
 const DataAI = [

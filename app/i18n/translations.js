@@ -110,6 +110,8 @@ export const translations = {
         viewMore: "Ver más",
         goBack: "Regresar",
       },
+      back: "Volver a proyectos",
+      visit: "Visitar sitio",
     },
     footer: {
       contact: "¡Contáctame en mis redes sociales!",
@@ -230,6 +232,8 @@ export const translations = {
         viewMore: "View More",
         goBack: "Go back",
       },
+      back: "Back to projects",
+      visit: "Visit site",
     },
     footer: {
       contact: "Contact me on my social media!",
