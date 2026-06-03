@@ -6,8 +6,8 @@ export default function AeroLaundryPage() {
   return (
     <ProjectShowcase
       title="AeroLaundry"
-      description="Web application for managing a laundry service, with order tracking and a clean, responsive interface."
-      descriptionEs="Aplicación web para la gestión de un servicio de lavandería, con seguimiento de pedidos y una interfaz limpia y responsiva."
+      description="Website for a laundry business in Tláhuac, Mexico City. Built in February 2026 with Node.js, deployed on GitHub Pages with a CI/CD pipeline."
+      descriptionEs="Página web para una lavandería en Tláhuac, Ciudad de México. Hecha en febrero de 2026 con Node.js y desplegada en GitHub Pages con CI/CD."
       images={[
         "/images/projects/software/aerolaundry/image1.webp",
         "/images/projects/software/aerolaundry/image2.webp",

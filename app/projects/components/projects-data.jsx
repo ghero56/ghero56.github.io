@@ -171,12 +171,12 @@ const DataSoftware = [
       "/images/projects/software/aerolaundry/image3.webp",
     ],
     description:
-      "Web application for managing a laundry service, with order tracking and a clean, responsive interface.",
+      "Website for a laundry business in Tláhuac, Mexico City. Built in February 2026 with Node.js, deployed on GitHub Pages with a CI/CD pipeline.",
     descriptionEs:
-      "Aplicación web para la gestión de un servicio de lavandería, con seguimiento de pedidos y una interfaz limpia y responsiva.",
+      "Página web para una lavandería en Tláhuac, Ciudad de México. Hecha en febrero de 2026 con Node.js y desplegada en GitHub Pages con CI/CD.",
     source: "/aerolaundry",
-    platform: "Web",
-    year: "2025",
+    platform: "Web (Node.js, GitHub Pages)",
+    year: "February 2026",
   },
   {
     title: "Cursos PyM",
