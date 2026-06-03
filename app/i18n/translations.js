@@ -1,4 +1,5 @@
-// Bilingual dictionary (ES / EN). Consumed through the useLanguage() hook.
+// Trilingual dictionary (ES / EN / HE). Consumed through the useLanguage() hook.
+// Hebrew (he) is RTL — the <html dir> and theme direction are set in layout.jsx.
 // Keep keys grouped by section so components can read t.section.key.
 
 export const translations = {
@@ -16,6 +17,7 @@ export const translations = {
       role: "Game Dev (Unity/Unreal) · Full Stack Dev (Flask/React)",
       intro:
         "Ingeniero en Computación por la UNAM. Desarrollo aplicaciones 3D de distintos tipos con Unity y C#, aplicaciones nativas de Windows con Python, y cuento con la base teórica para desarrollo web con PHP y MySQL. Aprendo rápido nuevas tecnologías y me adapto a la metodología del equipo.",
+      ctaEvents: "Ver mis eventos",
       ctaProjects: "Ver mis proyectos",
       ctaCourses: "Ver mis cursos",
       skillsTitle: "Tecnologías y herramientas",
@@ -110,11 +112,14 @@ export const translations = {
         viewMore: "Ver más",
         goBack: "Regresar",
       },
+      back: "Volver a proyectos",
+      visit: "Visitar sitio",
     },
     footer: {
       contact: "¡Contáctame en mis redes sociales!",
       rights: "Todos los derechos reservados.",
     },
+    sound: { on: "Sonido activado", off: "Activar sonido" },
     common: {
       viewMore: "Ver más",
       source: "Fuente",
@@ -136,6 +141,7 @@ export const translations = {
       role: "Game Dev (Unity/Unreal) · Full Stack Dev (Flask/React)",
       intro:
         "Computer Engineer from UNAM. I build 3D applications of many kinds with Unity and C#, native Windows apps with Python, and I have the theoretical foundation for web development with PHP and MySQL. I learn new technologies quickly and adapt to the team's methodology.",
+      ctaEvents: "See my events",
       ctaProjects: "See my projects",
       ctaCourses: "See my courses",
       skillsTitle: "Tech & tools",
@@ -230,16 +236,148 @@ export const translations = {
         viewMore: "View More",
         goBack: "Go back",
       },
+      back: "Back to projects",
+      visit: "Visit site",
     },
     footer: {
       contact: "Contact me on my social media!",
       rights: "All rights reserved.",
     },
+    sound: { on: "Sound on", off: "Enable sound" },
     common: {
       viewMore: "View more",
       source: "Source",
       platform: "Platform",
       year: "Year",
+    },
+  },
+  he: {
+    nav: {
+      home: "בית",
+      projects: "פרויקטים",
+      courses: "קורסים",
+      events: "אירועים",
+      brand: "Ghero56",
+    },
+    home: {
+      greeting: "היי! אני",
+      name: "Fernando Arciga Guzmán",
+      role: "Game Dev (Unity/Unreal) · Full Stack Dev (Flask/React)",
+      intro:
+        "מהנדס מחשבים מאוניברסיטת UNAM. אני מפתח יישומי תלת-ממד מסוגים שונים עם Unity ו-C#, יישומי דסקטופ ל-Windows עם Python, ויש לי את הבסיס התיאורטי לפיתוח אתרים עם PHP ו-MySQL. אני לומד טכנולוגיות חדשות במהירות ומסתגל למתודולוגיית הצוות.",
+      ctaEvents: "צפו באירועים שלי",
+      ctaProjects: "צפו בפרויקטים שלי",
+      ctaCourses: "צפו בקורסים שלי",
+      skillsTitle: "טכנולוגיות וכלים",
+      skillGroups: {
+        gamedev: "משחקים ותלת-ממד",
+        web: "ווב וצד שרת",
+        tools: "כלים ועוד",
+      },
+      aboutTitle: "עליי",
+      aboutBody:
+        "הייתי נשיא אגודת פיתוח המשחקים (SODVI) בפקולטה להנדסה של אוניברסיטת UNAM. ב-SODVI השתמשנו ב-Unity וב-C# כדי ללמוד לפתח משחקים; הכנסתי את השימוש ב-Unreal Engine, ב-C++ וב-Python כדי להרחיב את האופקים גם לתעשיות אחרות. הדבר חייב שימוש במערכת לבקרת גרסאות והוביל אותי להקים צוותי עבודה כדי לדמות סביבה קרובה ככל האפשר לעולם העבודה האמיתי.",
+      experienceTitle: "ניסיון",
+      experience: [
+        {
+          role: "מפתח Unity",
+          place: "Ironbit",
+          period: "דצמבר 2021 – היום",
+          desc: "פיתוח יישומי תלת-ממד, אופטימיזציה למובייל, ניהול AssetBundles בסביבת ייצור ובניית כלים פנימיים עם Unity ו-C#.",
+        },
+        {
+          role: "נשיא ומדריך",
+          place: "SODVI — הפקולטה להנדסה, UNAM",
+          period: "משנת 2019",
+          desc: "ניהלתי את האגודה והעברתי קורסים; הכנסתי את Unreal Engine, C++ ו-Python וכן בקרת גרסאות, והקמתי צוותים כדי לדמות סביבת עבודה אמיתית.",
+        },
+        {
+          role: "מורה למדעי המחשב",
+          place: "Servicios Académicos SABER",
+          period: "דצמבר 2019 – פברואר 2020",
+          desc: "הוראת מדעי המחשב ומבוא לתכנות.",
+        },
+      ],
+      highlightsTitle: "כמה דברים שעשיתי",
+      highlights: [
+        "תרגום של תרגולי מעבדה לסביבות תלת-ממד עם Unity ו-VR Trainer (Innoactive).",
+        "אופטימיזציית תלת-ממד ליישומים ניידים.",
+        "פיתוח וניהול של AssetBundles בסביבת ייצור.",
+        "יצירת כלים והתנהגויות בהתאמה אישית לייעול תהליכי העבודה של הצוות.",
+        "בדיקות משחקים עבור Spaceboy.",
+        "יישומי ווב מסוג CRUD ו-CI עם GitHub Pages.",
+        "יישום מתודולוגיות אג'ייל.",
+      ],
+      certsTitle: "הסמכות",
+      certsVerify: "צפייה בהסמכה",
+    },
+    courses: {
+      takenTitle: "קורסים שלמדתי",
+      taughtTitle: "קורסים שהעברתי",
+      taughtSubtitle: "חלק מהקורסים שהעברתי 🧑‍🏫",
+    },
+    events: {
+      intro:
+        "אלה כמה מהאירועים שאירגנו ואלה שאנחנו מתכננים לארגן בעתיד.",
+      ggj2025Title: "Global Game Jam 2025",
+      ggj2025Desc:
+        "אירוע בינלאומי שאורגן ב-ENAC (בית הספר הלאומי לאמנויות הקולנוע) במקסיקו סיטי.",
+      ggj2026Title: "Global Game Jam 2026",
+      ggj2026Desc:
+        "מהדורת 2026 של ה-Global Game Jam, אירוע פיתוח המשחקים הבינלאומי.",
+      comingSoonTitle: "בקרוב",
+      comingSoonDesc: "אירועים חדשים ומרגשים בדרך.",
+      albumButton: "צפייה באלבום המלא ב-Google Photos",
+      albumNote: "התמונות המלאות נמצאות באלבום שלי ב-Google Photos.",
+    },
+    projects: {
+      title: "פרויקטים 👀",
+      all: "כל הפרויקטים 🗂️",
+      cards: {
+        AI: "בינה מלאכותית",
+        games: "משחקים",
+        hardware: "חומרה",
+        software: "תוכנה",
+      },
+      pageTitles: {
+        games: "המשחקים שלי 🕹️",
+        AI: "פרויקטי בינה מלאכותית 🤖",
+        hardware: "פרויקטי חומרה 🛠️",
+        software: "פרויקטי תוכנה 💻",
+      },
+      sections: {
+        ai: "פרויקטי בינה מלאכותית 🤖",
+        games: "משחקים 🕹️",
+        hardware: "פרויקטי חומרה 🛠️",
+        misc: "פרויקטים שונים 📦",
+        software: "פרויקטי תוכנה 💻",
+      },
+      filters: {
+        platform: "פלטפורמה",
+        year: "שנה",
+        technology: "טכנולוגיה",
+        all: "הכול",
+        found: "פרויקטים נמצאו",
+      },
+      modal: {
+        platform: "פלטפורמה",
+        year: "שנה",
+        viewMore: "לפרטים נוספים",
+        goBack: "חזרה",
+      },
+      back: "חזרה לפרויקטים",
+      visit: "מעבר לאתר",
+    },
+    footer: {
+      contact: "צרו איתי קשר ברשתות החברתיות!",
+      rights: "כל הזכויות שמורות.",
+    },
+    sound: { on: "צליל פעיל", off: "הפעלת צליל" },
+    common: {
+      viewMore: "לפרטים נוספים",
+      source: "מקור",
+      platform: "פלטפורמה",
+      year: "שנה",
     },
   },
 };

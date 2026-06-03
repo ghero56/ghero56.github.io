@@ -14,7 +14,7 @@ const ggj25 = Array.from({ length: 26 }, (_, i) => ({
   title: `Global Game Jam 2025 — ${i + 1}`,
 }));
 
-const ggj26 = Array.from({ length: 4 }, (_, i) => ({
+const ggj26 = Array.from({ length: 8 }, (_, i) => ({
   img: `/images/events/ggj2026/image${i + 1}.webp`,
   title: `Global Game Jam 2026 — ${i + 1}`,
 }));

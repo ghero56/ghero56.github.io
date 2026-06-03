@@ -163,6 +163,39 @@ const DataSoftware = [
     platform: "x64 (C++, OpenGL)",
     year: "2025",
   },
+  {
+    title: "AeroLaundry",
+    imgUrl: [
+      "/images/projects/software/aerolaundry/image1.webp",
+      "/images/projects/software/aerolaundry/image2.webp",
+      "/images/projects/software/aerolaundry/image3.webp",
+    ],
+    description:
+      "Website for a laundry business in Tláhuac, Mexico City. Built in February 2026 with Node.js, deployed on GitHub Pages with a CI/CD pipeline.",
+    descriptionEs:
+      "Página web para una lavandería en Tláhuac, Ciudad de México. Hecha en febrero de 2026 con Node.js y desplegada en GitHub Pages con CI/CD.",
+    source: "/aerolaundry",
+    platform: "Web (Node.js, GitHub Pages)",
+    year: "February 2026",
+  },
+  {
+    title: "Cursos PyM",
+    imgUrl: [
+      "/images/projects/software/cursos-pym/image1.webp",
+      "/images/projects/software/cursos-pym/image2.webp",
+      "/images/projects/software/cursos-pym/image3.webp",
+      "/images/projects/software/cursos-pym/image4.webp",
+      "/images/projects/software/cursos-pym/image5.webp",
+      "/images/projects/software/cursos-pym/image6.webp",
+    ],
+    description:
+      "Online learning platform with JWT authentication, roles, video streaming and real-time chat. Built with Next.js, Flask and MongoDB.",
+    descriptionEs:
+      "Plataforma de cursos en línea con autenticación JWT, roles, streaming de video y chat en tiempo real. Hecha con Next.js, Flask y MongoDB.",
+    source: "/pym-front",
+    platform: "Web (Next.js, Flask, MongoDB)",
+    year: "2025",
+  },
 ];
 
 const DataAI = [

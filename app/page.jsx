@@ -13,6 +13,7 @@ import {
   Avatar,
   Link as MuiLink,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import Link from "next/link";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -20,6 +21,28 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { useLanguage } from "./layout";
 import TechMarquee from "./components/tech-marquee";
+
+// Acrylic (glassmorphism) card with a neon glow on hover.
+const acrylicCard = (theme) => ({
+  bgcolor: alpha(
+    theme.palette.background.paper,
+    theme.palette.mode === "dark" ? 0.5 : 0.72,
+  ),
+  backdropFilter: "blur(12px)",
+  WebkitBackdropFilter: "blur(12px)",
+  border: `1px solid ${alpha(theme.palette.primary.main, 0.25)}`,
+  borderRadius: 12,
+  transition: "transform 0.25s, box-shadow 0.25s, border-color 0.25s",
+  "&:hover": {
+    transform: "translateY(-6px)",
+    borderColor: alpha(theme.palette.secondary.main, 0.7),
+    boxShadow: `0 0 18px ${alpha(theme.palette.secondary.main, 0.55)}, 0 10px 30px ${alpha("#000", 0.25)}`,
+  },
+});
+
+const neonText = (theme) => ({
+  textShadow: `0 0 22px ${alpha(theme.palette.secondary.main, 0.45)}`,
+});
 
 // Skills grouped by area (language-neutral tech names).
 const skillGroups = [
@@ -107,7 +130,11 @@ export default function Home() {
               <Typography
                 variant="h2"
                 fontWeight={800}
-                sx={{ fontSize: { xs: "2.2rem", md: "3.5rem" }, lineHeight: 1.1 }}
+                sx={(theme) => ({
+                  fontSize: { xs: "2.2rem", md: "3.5rem" },
+                  lineHeight: 1.1,
+                  ...neonText(theme),
+                })}
                 gutterBottom
               >
                 {h.name}
@@ -125,8 +152,17 @@ export default function Home() {
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
                 <Button
                   component={Link}
-                  href="/projects"
+                  href="/events"
                   variant="contained"
+                  size="large"
+                  sx={{ fontWeight: 700, borderRadius: 2 }}
+                >
+                  {h.ctaEvents}
+                </Button>
+                <Button
+                  component={Link}
+                  href="/projects"
+                  variant="outlined"
                   size="large"
                   sx={{ fontWeight: 700, borderRadius: 2 }}
                 >
@@ -209,7 +245,17 @@ export default function Home() {
                       key={skill}
                       label={skill}
                       color="primary"
-                      sx={{ fontSize: "0.95rem", fontWeight: 600, px: 1, py: 2.4 }}
+                      sx={{
+                        fontSize: "0.95rem",
+                        fontWeight: 600,
+                        px: 1,
+                        py: 2.4,
+                        transition: "box-shadow 0.2s, transform 0.2s",
+                        "&:hover": {
+                          transform: "translateY(-2px)",
+                          boxShadow: "0 0 12px rgba(87,143,202,0.85)",
+                        },
+                      }}
                     />
                   ))}
                 </Box>
@@ -227,14 +273,7 @@ export default function Home() {
         <Grid container spacing={4} sx={{ mt: 1 }} justifyContent="center">
           {h.experience.map((exp, i) => (
             <Grid item xs={12} md={4} key={i}>
-              <Card
-                sx={{
-                  height: "100%",
-                  borderRadius: 3,
-                  transition: "transform 0.25s, box-shadow 0.25s",
-                  "&:hover": { transform: "translateY(-6px)", boxShadow: 6 },
-                }}
-              >
+              <Card sx={(theme) => ({ ...acrylicCard(theme), height: "100%" })}>
                 <CardContent>
                   <WorkOutlineIcon color="secondary" sx={{ fontSize: 36, mb: 1 }} />
                   <Typography variant="h6" fontWeight={700}>
@@ -286,14 +325,12 @@ export default function Home() {
           {certs.map((cert, i) => (
             <Grid item xs={12} sm={6} md={3} key={i}>
               <Card
-                sx={{
+                sx={(theme) => ({
+                  ...acrylicCard(theme),
                   height: "100%",
-                  borderRadius: 3,
                   display: "flex",
                   flexDirection: "column",
-                  transition: "transform 0.25s, box-shadow 0.25s",
-                  "&:hover": { transform: "translateY(-6px)", boxShadow: 6 },
-                }}
+                })}
               >
                 <CardContent sx={{ flexGrow: 1 }}>
                   <VerifiedIcon color="primary" sx={{ fontSize: 34, mb: 1 }} />

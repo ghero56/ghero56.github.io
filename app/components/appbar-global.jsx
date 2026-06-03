@@ -23,6 +23,9 @@ const AppBarGlobal = () => {
   const { t, lang, toggleLang } = useLanguage();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Label for the language button = the NEXT language in the cycle.
+  const nextLangLabel = { es: "EN", en: "עב", he: "ES" }[lang] || "EN";
+
   const navItems = [
     { label: t.nav.home, href: "/" },
     { label: t.nav.projects, href: "/projects" },
@@ -82,7 +85,7 @@ const AppBarGlobal = () => {
               }}
               aria-label="Toggle language"
             >
-              {lang === "es" ? "EN" : "ES"}
+              {nextLangLabel}
             </Button>
 
             <IconButton
