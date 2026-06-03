@@ -7,6 +7,7 @@ import ThemeButton from "./components/theme-button";
 import SoundToggle from "./components/sound-toggle";
 import FooterGlobal from "./components/footer-global";
 import { darkTheme, lightTheme } from "./styles/global-themes";
+import { createTheme } from "@mui/material/styles";
 import { createContext, useContext, useMemo, useState } from "react";
 import Head from "next/head";
 import GoUpButton from "./components/up-button";
@@ -27,7 +28,9 @@ const ThemeToggleContext = createContext();
 
 export const useThemeToggle = () => useContext(ThemeToggleContext);
 
-// Contexto de idioma (ES / EN)
+// Contexto de idioma (ES / EN / HE)
+const LANGS = ["es", "en", "he"];
+const RTL_LANGS = ["he"];
 const LanguageContext = createContext();
 
 export const useLanguage = () => useContext(LanguageContext);
@@ -39,20 +42,21 @@ export default function RootLayout({ children }) {
   // Restaurar idioma y tema guardados (solo en cliente, evita mismatch de hidratación)
   useEffect(() => {
     const savedLang = window.localStorage.getItem("lang");
-    if (savedLang === "es" || savedLang === "en") setLang(savedLang);
+    if (LANGS.includes(savedLang)) setLang(savedLang);
     const savedMode = window.localStorage.getItem("mode");
     if (savedMode === "dark" || savedMode === "light") setMode(savedMode);
   }, []);
 
   const toggleLang = () => {
     setLang((prev) => {
-      const next = prev === "es" ? "en" : "es";
+      const next = LANGS[(LANGS.indexOf(prev) + 1) % LANGS.length];
       window.localStorage.setItem("lang", next);
       return next;
     });
   };
 
   const t = useMemo(() => translations[lang], [lang]);
+  const dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
 
   const [scrollPosition, setSrollPosition] = useState(0);
   const [showGoTop, setshowGoTop] = useState(false);
@@ -79,8 +83,8 @@ export default function RootLayout({ children }) {
   });
 
   const theme = useMemo(
-    () => (mode === "dark" ? darkTheme : lightTheme),
-    [mode],
+    () => createTheme(mode === "dark" ? darkTheme : lightTheme, { direction: dir }),
+    [mode, dir],
   );
 
   const toggleTheme = () => {
@@ -92,7 +96,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang={lang}>
+    <html lang={lang} dir={dir}>
       <Head>
         <title>Ghero 56</title>
         <meta
