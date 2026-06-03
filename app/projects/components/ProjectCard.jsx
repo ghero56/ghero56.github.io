@@ -167,8 +167,12 @@ function Gallery({
     setSelectedItem(null);
   };
 
-  const descriptionOf = (item) =>
-    lang === "es" && item?.descriptionEs ? item.descriptionEs : item?.description;
+  const descriptionOf = (item) => {
+    if (!item) return "";
+    if (lang === "es") return item.descriptionEs || item.description;
+    if (lang === "he") return item.descriptionHe || item.description;
+    return item.description;
+  };
 
   return (
     <>
