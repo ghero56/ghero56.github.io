@@ -11,130 +11,104 @@ import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 
 import { Card, Container, Typography } from "@mui/material";
-
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
-// my component
-import EventDialog from "./components/event-dialog";
 
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import EventDialog from "./components/event-dialog";
+import { useLanguage } from "../layout";
+
+const ALBUM_2026 = "https://photos.app.goo.gl/GNxtTCL3hG78hUct6";
+const ALBUM_2025 = "https://photos.app.goo.gl/iSyWgSi2GZzVanM67";
 
 export default function CustomizedTimeline() {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const { t } = useLanguage();
+  const [selected, setSelected] = useState(null);
 
-  const openDialog = () => {
-    setDialogOpen(true);
-    console.log("Dialog opened");
-  };
+  const events = [    
+    {
+      year: "2025",
+      title: t.events.ggj2025Title,
+      desc: t.events.ggj2025Desc,
+      cover: "/images/events/ggj2025/portada.webp",
+      album: ALBUM_2025,
+      listType: "ggj25",
+    },
+    {
+      year: "2026",
+      title: t.events.ggj2026Title,
+      desc: t.events.ggj2026Desc,
+      // TODO: replace with a GGJ 2026 cover photo when available.
+      cover: "/images/events/ggj2026/portada.webp",
+      album: ALBUM_2026,
+      listType: "ggj26",
+    },
+    {
+      year: "20XX",
+      title: t.events.comingSoonTitle,
+      desc: t.events.comingSoonDesc,
+      cover: "/images/events/coming-soon/coming-soon.jpg",
+      placeholder: true,
+    },
+  ];
 
   return (
-    <Container>
+    <Container sx={{ py: { xs: 4, md: 6 } }}>
       <Timeline position="alternate">
-        <Typography variant="h6" align="center" fontSize={35}>
-          Those are some of the events <i>we</i> have hosted in the past and the
-          ones <i>we</i> are planning to host in the future.
+        <Typography variant="h6" align="center" fontSize={35} sx={{ mb: 4 }}>
+          {t.events.intro}
         </Typography>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            align="center"
-            variant="body2"
-            color="text.secondary"
-          ></TimelineOppositeContent>
-          <TimelineSeparator></TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}></TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            variant="body2"
-            color="text.secondary"
-          >
-            Jan - 2025
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary">
-              <LaptopMacIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "24px", px: 2 }}>
-            <Card sx={{ ml: "auto", minHeight: 500 }}>
-              <CardActionArea
-                onClick={
-                  // now let's open the dialog
-                  () => {
-                    openDialog();
-                  }
-                }
+        {events.map((ev, i) => (
+          <TimelineItem key={ev.year}>
+            <TimelineOppositeContent
+              sx={{ m: "auto 0" }}
+              variant="body2"
+              color="text.secondary"
+            >
+              {ev.year}
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineConnector />
+              <TimelineDot color="primary">
+                <SportsEsportsIcon />
+              </TimelineDot>
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent sx={{ py: "24px", px: 2 }}>
+              <Card
+                sx={{
+                  borderRadius: 3,
+                  transition: "transform 0.25s, box-shadow 0.25s",
+                  "&:hover": { transform: "translateY(-6px)", boxShadow: 6 },
+                }}
               >
-                <CardMedia
-                  component="img"
-                  height="auto"
-                  image="/images/events/ggj2025/portada.png"
-                  alt="Global Game Jam Banner"
-                />
-                <CardContent mt={"auto"}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Global Game Jam 2025
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    International event hosted by ENAC (National School of
-                    Cinematographic Arts) in Mexico City.
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            variant="body2"
-            color="text.secondary"
-          >
-            2025
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary"></TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "24px", px: 2 }}>
-            <Card sx={{ ml: "auto", minHeight: 500 }}>
-              <CardActionArea
-                onClick={
-                  // now let's open the dialog
-                  () => {
-                    // do nothing
-                  }
-                }
-              >
-                <CardMedia
-                  component="img"
-                  height="auto"
-                  image="/images/events/coming-soon/coming-soon.jpg"
-                  alt="Coming Soon Banner"
-                />
-                <CardContent mt={"auto"}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Stay Tuned
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    New and awesome events are coming in the near future.
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </TimelineContent>
-        </TimelineItem>
+                <CardActionArea
+                  onClick={() => (ev.placeholder ? null : setSelected(ev))}
+                >
+                  <CardMedia
+                    component="img"
+                    image={ev.cover}
+                    alt={ev.title}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {ev.title}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                      {ev.desc}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </TimelineContent>
+          </TimelineItem>
+        ))}
       </Timeline>
       <EventDialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        listType="ggj25"
+        open={Boolean(selected)}
+        onClose={() => setSelected(null)}
+        event={selected}
       />
     </Container>
   );

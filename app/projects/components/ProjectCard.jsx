@@ -1,17 +1,18 @@
 "use client";
-import React, { useState, useEffect, act } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Grid, Typography, Box, Modal, Link } from "@mui/material";
 import { styled } from "@mui/system";
+import { useLanguage } from "../../layout";
 
-const HoverGrid = styled(Box)(({ imgurl, fullsize }) => ({
+const HoverGrid = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "imgurl" && prop !== "fullsize",
+})(({ imgurl, fullsize }) => ({
   position: "relative",
   overflow: "hidden",
   height: fullsize ? 700 : 350,
-
   width: "100%",
-
-  backgroundImage: `url(${imgurl})`,
-
+  backgroundColor: "rgba(87,143,202,0.12)", // placeholder while not loaded
+  backgroundImage: imgurl ? `url(${imgurl})` : "none",
   backgroundSize: "cover",
   backgroundPosition: "center",
   cursor: "pointer",
@@ -52,23 +53,71 @@ const Overlay = styled(Box, {
   transition: transition ? "opacity 0.3s ease" : "none",
 }));
 
-const ImageHoverItem = ({ imgUrl, title, fullsize, transition = false }) => (
-  <HoverGrid
-    imgurl={imgUrl}
-    fullsize={fullsize ? 1 : undefined}
-    className="hover-grid"
-  >
-    <ImageLayer
-      className="image"
-      style={{ backgroundImage: `url(${imgUrl})` }}
-    />
-    <Overlay transition={transition} className="overlay">
-      <Typography variant="h4" color="common.white">
-        {title}
-      </Typography>
-    </Overlay>
-  </HoverGrid>
-);
+// Only mounts its (often heavy) media while near the viewport. For animated
+// projects it renders a hardware-decoded <video>; when scrolled away the video
+// is unmounted so the browser stops decoding it. This bounds how much animated
+// media decodes at once and is what keeps weak mobile devices from crashing.
+const ImageHoverItem = ({ imgUrl, video, title, fullsize, transition = false }) => {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "300px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const showVideo = inView && Boolean(video);
+  const activeUrl = inView && !video ? imgUrl : undefined;
+
+  return (
+    <HoverGrid
+      ref={ref}
+      imgurl={activeUrl}
+      fullsize={fullsize ? 1 : undefined}
+      className="hover-grid"
+    >
+      {showVideo ? (
+        <video
+          className="image"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            transition: "filter 0.3s ease, transform 0.3s ease",
+          }}
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+      ) : (
+        <ImageLayer
+          className="image"
+          style={{ backgroundImage: activeUrl ? `url(${activeUrl})` : "none" }}
+        />
+      )}
+      <Overlay transition={transition} className="overlay">
+        <Typography variant="h4" color="common.white">
+          {title}
+        </Typography>
+      </Overlay>
+    </HoverGrid>
+  );
+};
 
 function Gallery({
   data,
@@ -78,33 +127,31 @@ function Gallery({
   transitionDuration = 2000,
   fullSize = false,
 }) {
+  const { t, lang } = useLanguage();
   const [activeImage, setActiveImage] = useState(null);
-
   const [openGallery, setOpenGallery] = useState(false);
   const [selectedItem, setSelectedItem] = useState(
     carrousel && data.length > 0 ? data[0] : null,
   );
 
-  const [fade, setFade] = useState(true);
-
   useEffect(() => {
-    if (!selectedItem?.imgUrl) return;
+    if (!selectedItem) return;
+    // Video items don't cycle images (avoids loading the heavy source webp).
+    if (selectedItem.video) {
+      setActiveImage(null);
+      return;
+    }
+    if (!selectedItem.imgUrl) return;
 
     const images = Array.isArray(selectedItem.imgUrl)
       ? selectedItem.imgUrl
       : [selectedItem.imgUrl];
     let index = 0;
-
     setActiveImage(images[0]);
-    setFade(true);
 
     const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        index = (index + 1) % images.length;
-        setActiveImage(images[index]);
-        setFade(true); // actually is not used
-      }, 300); // fade out duration
+      index = (index + 1) % images.length;
+      setActiveImage(images[index]);
     }, transitionDuration);
 
     return () => clearInterval(interval);
@@ -119,6 +166,9 @@ function Gallery({
     setOpenGallery(false);
     setSelectedItem(null);
   };
+
+  const descriptionOf = (item) =>
+    lang === "es" && item?.descriptionEs ? item.descriptionEs : item?.description;
 
   return (
     <>
@@ -135,10 +185,11 @@ function Gallery({
             textAlign: "center",
             padding: "20px",
           }}
-          onClick={() => (enableClick ? handleOpen(item) : null)} // Set the gallery to open on click
+          onClick={() => (enableClick ? handleOpen(item) : null)}
         >
           <ImageHoverItem
             fullsize={fullSize}
+            video={carrousel ? undefined : item.video}
             imgUrl={
               carrousel
                 ? activeImage
@@ -159,20 +210,15 @@ function Gallery({
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundImage: `url(${activeImage})`,
+            backgroundColor: "rgba(0,0,0,0.85)",
+            backgroundImage: selectedItem?.video
+              ? "none"
+              : `url(${activeImage})`,
             backgroundSize: "max(75%, 75%)",
             backgroundPosition: "center",
-            sx: {
-              mt: 100,
-              ml: 100,
-              mr: 100,
-              mb: 100,
-              backgroundColor: "rgba(0,0,0,0.85)",
-            },
             backgroundRepeat: "no-repeat",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
-
             display: "flex",
             margin: "auto",
             flexDirection: "column",
@@ -190,45 +236,57 @@ function Gallery({
           {selectedItem && (
             <Box
               sx={{
-                maxWidth: "50%",
+                maxWidth: { xs: "90%", md: "50%" },
                 width: "100%",
                 backgroundColor: "rgba(0,0,0,0.5)",
                 padding: "20px",
                 borderRadius: "12px",
                 boxShadow: 24,
-                color: "main.primary",
+                color: "common.white",
                 textAlign: "center",
               }}
             >
               <Typography variant="h3" gutterBottom>
                 {selectedItem.title}
               </Typography>
+
+              {selectedItem.video && (
+                <Box
+                  component="video"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  sx={{
+                    width: "100%",
+                    maxHeight: "50vh",
+                    borderRadius: "12px",
+                    mb: 2,
+                    backgroundColor: "#000",
+                  }}
+                >
+                  <source src={selectedItem.video} type="video/mp4" />
+                </Box>
+              )}
+
               <Typography variant="body1" sx={{ maxWidth: "auto" }}>
-                {selectedItem.description}
+                {descriptionOf(selectedItem)}
               </Typography>
-              <Typography
-                variant="body2"
-                sx={{ marginTop: "20px", color: "main.primary" }}
-              >
-                <strong>Platform:</strong> {selectedItem.platform || "N/A"}
+              <Typography variant="body2" sx={{ marginTop: "20px" }}>
+                <strong>{t.projects.modal.platform}:</strong>{" "}
+                {selectedItem.platform || "N/A"}
               </Typography>
-              <Typography
-                variant="body2"
-                sx={{ marginTop: "20px", color: "main.primary" }}
-              >
-                <strong>Year:</strong> {selectedItem.year || "N/A"}
+              <Typography variant="body2" sx={{ marginTop: "20px" }}>
+                <strong>{t.projects.modal.year}:</strong>{" "}
+                {selectedItem.year || "N/A"}
               </Typography>
-              <Typography
-                variant="body2"
-                sx={{ marginTop: "20px", color: "main.primary" }}
-              >
+              <Typography variant="body2" sx={{ marginTop: "20px" }}>
                 <Link
-                  href={
-                    selectedItem.source === "none" ? "#" : selectedItem.source
-                  }
+                  href={selectedItem.source === "none" ? "#" : selectedItem.source}
                   sx={{
                     marginTop: "20px",
-                    color: "main.primary",
+                    color: "common.white",
                     textDecoration: "underline",
                   }}
                   onClick={() =>
@@ -238,26 +296,28 @@ function Gallery({
                   }
                   underline="hover"
                 >
-                  {selectedItem.source == "none" ? "Go back" : "View More"}
+                  {selectedItem.source === "none"
+                    ? t.projects.modal.goBack
+                    : t.projects.modal.viewMore}
                 </Link>
               </Typography>
               {selectedItem.source !== "none" && (
                 <Typography
                   align="center"
                   variant="body2"
-                  sx={{ marginTop: "20px", color: "main.primary" }}
+                  sx={{ marginTop: "20px" }}
                 >
                   <Link
                     href="#"
                     onClick={handleClose}
                     sx={{
                       marginTop: "20px",
-                      color: "main.secondary",
+                      color: "common.white",
                       textDecoration: "underline",
                     }}
                     underline="hover"
                   >
-                    Go back
+                    {t.projects.modal.goBack}
                   </Link>
                 </Typography>
               )}

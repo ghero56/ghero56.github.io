@@ -1,11 +1,13 @@
 "use client";
 import Gallery from "../components/ProjectCard";
 import { Box, Grid, Typography } from "@mui/material";
-import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
+import CodeIcon from "@mui/icons-material/Code";
 import { DataSoftware } from "../components/projects-data";
+import { useLanguage } from "../../layout";
 
 export default function SoftwarePage() {
-  const title = "Software projects";
+  const { t } = useLanguage();
+  const title = t.projects.pageTitles.software;
   const Data = DataSoftware;
 
   return (
@@ -27,16 +29,16 @@ export default function SoftwarePage() {
             gutterBottom
             align="center"
             sx={{
-              color: "main.primary",
+              color: "text.primary",
               textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
             }}
           >
             {title}
           </Typography>
-          <PrecisionManufacturingIcon
+          <CodeIcon
             sx={{
               fontSize: "2rem",
-              color: "main.primary",
+              color: "primary.main",
               marginLeft: "10px",
             }}
           />

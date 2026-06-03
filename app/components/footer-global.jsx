@@ -7,8 +7,10 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import { useLanguage } from "../layout";
 
 export default function FooterGlobal() {
+  const { t } = useLanguage();
   const [year, setYear] = useState("");
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function FooterGlobal() {
                 fontSize: "14px",
               }}
             >
-              Contact me on my social media!
+              {t.footer.contact}
             </Typography>
           </Grid>
           <Grid item sm={2}>
@@ -143,7 +145,7 @@ export default function FooterGlobal() {
                 fontSize: "14px",
               }}
             >
-              © 1999-{year} Ghero56. All rights reserved.
+              © 1999-{year} Ghero56. {t.footer.rights}
             </Typography>
           </Grid>
         </Grid>

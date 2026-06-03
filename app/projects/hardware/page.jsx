@@ -3,12 +3,11 @@ import Gallery from "../components/ProjectCard";
 import { Box, Grid, Typography } from "@mui/material";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import { DataHardware } from "../components/projects-data"; // Import the hardware data
+import { useLanguage } from "../../layout";
 
 export default function HardwarePage() {
-  // this data has the title, and 1 array of games with title and image
-  // those are accessed in the Gallery component as Data.title and Data.data
-
-  const title = "Hardware projects";
+  const { t } = useLanguage();
+  const title = t.projects.pageTitles.hardware;
   const Data = DataHardware;
 
   return (
@@ -30,7 +29,7 @@ export default function HardwarePage() {
             gutterBottom
             align="center"
             sx={{
-              color: "main.primary",
+              color: "text.primary",
               textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
             }}
           >
@@ -39,7 +38,7 @@ export default function HardwarePage() {
           <PrecisionManufacturingIcon
             sx={{
               fontSize: "2rem",
-              color: "main.primary",
+              color: "primary.main",
               marginLeft: "10px",
             }}
           />
