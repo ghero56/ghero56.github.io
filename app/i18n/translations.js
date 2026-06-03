@@ -117,6 +117,7 @@ export const translations = {
       contact: "¡Contáctame en mis redes sociales!",
       rights: "Todos los derechos reservados.",
     },
+    sound: { on: "Sonido activado", off: "Activar sonido" },
     common: {
       viewMore: "Ver más",
       source: "Fuente",
@@ -239,6 +240,7 @@ export const translations = {
       contact: "Contact me on my social media!",
       rights: "All rights reserved.",
     },
+    sound: { on: "Sound on", off: "Enable sound" },
     common: {
       viewMore: "View more",
       source: "Source",

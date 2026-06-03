@@ -4,6 +4,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Geist, Geist_Mono } from "next/font/google";
 import AppBarGlobal from "./components/appbar-global";
 import ThemeButton from "./components/theme-button";
+import SoundToggle from "./components/sound-toggle";
 import FooterGlobal from "./components/footer-global";
 import { darkTheme, lightTheme } from "./styles/global-themes";
 import { createContext, useContext, useMemo, useState } from "react";
@@ -109,6 +110,7 @@ export default function RootLayout({ children }) {
               <AppBarGlobal />
               {children}
               <ThemeButton />
+              <SoundToggle />
 
               <GoUpButton
                 handleScrollUp={handleScrollUp}
