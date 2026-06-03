@@ -9,6 +9,7 @@ import { darkTheme, lightTheme } from "./styles/global-themes";
 import { createContext, useContext, useMemo, useState } from "react";
 import Head from "next/head";
 import GoUpButton from "./components/up-button";
+import { translations } from "./i18n/translations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,8 +26,32 @@ const ThemeToggleContext = createContext();
 
 export const useThemeToggle = () => useContext(ThemeToggleContext);
 
+// Contexto de idioma (ES / EN)
+const LanguageContext = createContext();
+
+export const useLanguage = () => useContext(LanguageContext);
+
 export default function RootLayout({ children }) {
   const [mode, setMode] = useState("dark");
+  const [lang, setLang] = useState("es");
+
+  // Restaurar idioma y tema guardados (solo en cliente, evita mismatch de hidratación)
+  useEffect(() => {
+    const savedLang = window.localStorage.getItem("lang");
+    if (savedLang === "es" || savedLang === "en") setLang(savedLang);
+    const savedMode = window.localStorage.getItem("mode");
+    if (savedMode === "dark" || savedMode === "light") setMode(savedMode);
+  }, []);
+
+  const toggleLang = () => {
+    setLang((prev) => {
+      const next = prev === "es" ? "en" : "es";
+      window.localStorage.setItem("lang", next);
+      return next;
+    });
+  };
+
+  const t = useMemo(() => translations[lang], [lang]);
 
   const [scrollPosition, setSrollPosition] = useState(0);
   const [showGoTop, setshowGoTop] = useState(false);
@@ -58,11 +83,15 @@ export default function RootLayout({ children }) {
   );
 
   const toggleTheme = () => {
-    setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"));
+    setMode((prevMode) => {
+      const next = prevMode === "dark" ? "light" : "dark";
+      window.localStorage.setItem("mode", next);
+      return next;
+    });
   };
 
   return (
-    <html lang="en">
+    <html lang={lang}>
       <Head>
         <title>Ghero 56</title>
         <meta
@@ -74,16 +103,21 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeToggleContext.Provider value={{ toggleTheme, mode }}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <AppBarGlobal />
-            {children}
-            <ThemeButton />
+          <LanguageContext.Provider value={{ lang, toggleLang, setLang, t }}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <AppBarGlobal />
+              {children}
+              <ThemeButton />
 
-            <GoUpButton handleScrollUp={handleScrollUp} showGoTop={showGoTop} />
+              <GoUpButton
+                handleScrollUp={handleScrollUp}
+                showGoTop={showGoTop}
+              />
 
-            <FooterGlobal />
-          </ThemeProvider>
+              <FooterGlobal />
+            </ThemeProvider>
+          </LanguageContext.Provider>
         </ThemeToggleContext.Provider>
       </body>
     </html>
