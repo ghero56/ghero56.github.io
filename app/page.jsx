@@ -152,8 +152,17 @@ export default function Home() {
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
                 <Button
                   component={Link}
-                  href="/projects"
+                  href="/events"
                   variant="contained"
+                  size="large"
+                  sx={{ fontWeight: 700, borderRadius: 2 }}
+                >
+                  {h.ctaEvents}
+                </Button>
+                <Button
+                  component={Link}
+                  href="/projects"
+                  variant="outlined"
                   size="large"
                   sx={{ fontWeight: 700, borderRadius: 2 }}
                 >

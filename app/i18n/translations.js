@@ -16,6 +16,7 @@ export const translations = {
       role: "Game Dev (Unity/Unreal) · Full Stack Dev (Flask/React)",
       intro:
         "Ingeniero en Computación por la UNAM. Desarrollo aplicaciones 3D de distintos tipos con Unity y C#, aplicaciones nativas de Windows con Python, y cuento con la base teórica para desarrollo web con PHP y MySQL. Aprendo rápido nuevas tecnologías y me adapto a la metodología del equipo.",
+      ctaEvents: "Ver mis eventos",
       ctaProjects: "Ver mis proyectos",
       ctaCourses: "Ver mis cursos",
       skillsTitle: "Tecnologías y herramientas",
@@ -139,6 +140,7 @@ export const translations = {
       role: "Game Dev (Unity/Unreal) · Full Stack Dev (Flask/React)",
       intro:
         "Computer Engineer from UNAM. I build 3D applications of many kinds with Unity and C#, native Windows apps with Python, and I have the theoretical foundation for web development with PHP and MySQL. I learn new technologies quickly and adapt to the team's methodology.",
+      ctaEvents: "See my events",
       ctaProjects: "See my projects",
       ctaCourses: "See my courses",
       skillsTitle: "Tech & tools",
