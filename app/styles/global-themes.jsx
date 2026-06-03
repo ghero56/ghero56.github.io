@@ -2,46 +2,59 @@
 
 import { createTheme } from "@mui/material/styles";
 
-// Definición de temas
-const lightTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#FFCDB2",
-    },
-    secondary: {
-      main: "#FFB4A2",
+// Paleta compartida: azul como identidad de marca en ambos modos.
+const brand = {
+  primary: "#3674B5",
+  secondary: "#578FCA",
+};
+
+const sharedTheme = {
+  shape: { borderRadius: 12 },
+  typography: {
+    fontFamily: "var(--font-geist-sans), Arial, sans-serif",
+    h2: { fontWeight: 800 },
+    h4: { fontWeight: 800 },
+    button: { textTransform: "none", fontWeight: 600 },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: { borderRadius: 10 },
+      },
     },
   },
-  typography: {
-    fontFamily: "Arial, sans-serif",
-    primary: {
-      main: "#000000",
+};
+
+const lightTheme = createTheme({
+  ...sharedTheme,
+  palette: {
+    mode: "light",
+    primary: { main: brand.primary },
+    secondary: { main: brand.secondary },
+    background: {
+      default: "#f8fafc",
+      paper: "#ffffff",
     },
-    secondary: {
-      main: "#6A0572",
+    text: {
+      primary: "#0f172a",
+      secondary: "#475569",
     },
   },
 });
 
 const darkTheme = createTheme({
+  ...sharedTheme,
   palette: {
     mode: "dark",
-    primary: {
-      main: "#3674B5",
+    primary: { main: brand.primary },
+    secondary: { main: brand.secondary },
+    background: {
+      default: "#0f172a",
+      paper: "#1e293b",
     },
-    secondary: {
-      main: "#578FCA",
-    },
-  },
-
-  typography: {
-    fontFamily: "Arial, sans-serif",
-    primary: {
-      main: "#FFFFFF",
-    },
-    secondary: {
-      main: "#B0C4DE",
+    text: {
+      primary: "#f1f5f9",
+      secondary: "#94a3b8",
     },
   },
 });
