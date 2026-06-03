@@ -9,14 +9,16 @@ import {
   DataMisc,
   DataSoftware,
 } from "../components/projects-data";
+import { useLanguage } from "../../layout";
 
 export default function AllProjectsPage() {
+  const { t } = useLanguage();
   const sections = [
-    { title: "AI Projects 🤖", data: DataAI },
-    { title: "Games 🕹️", data: DataGames },
-    { title: "Hardware Projects 🛠️", data: DataHardware },
-    { title: "Miscellaneous Projects 📦", data: DataMisc },
-    { title: "Software Projects 💻", data: DataSoftware },
+    { title: t.projects.sections.ai, data: DataAI },
+    { title: t.projects.sections.games, data: DataGames },
+    { title: t.projects.sections.hardware, data: DataHardware },
+    { title: t.projects.sections.misc, data: DataMisc },
+    { title: t.projects.sections.software, data: DataSoftware },
   ];
 
   // Collect unique filter options from all sections' data
@@ -101,24 +103,26 @@ export default function AllProjectsPage() {
         gutterBottom
         align="center"
         sx={{
-          color: "main.primary",
+          color: "text.primary",
           textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
           marginBottom: 2,
         }}
       >
-        All Projects 🗂️
+        {t.projects.all}
       </Typography>
       {/* Filter Options */}
       <Box sx={{ marginBottom: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle1">Platform</Typography>
+            <Typography variant="subtitle1">
+              {t.projects.filters.platform}
+            </Typography>
             <Select
               value={selectedPlatform}
               onChange={(e) => setSelectedPlatform(e.target.value)}
               style={{ width: "100%", padding: 8, borderRadius: 4 }}
             >
-              <MenuItem value="">All</MenuItem>
+              <MenuItem value="">{t.projects.filters.all}</MenuItem>
               {platforms.map((platform) => (
                 <MenuItem key={platform} value={platform}>
                   {platform}
@@ -127,13 +131,15 @@ export default function AllProjectsPage() {
             </Select>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle1">Year</Typography>
+            <Typography variant="subtitle1">
+              {t.projects.filters.year}
+            </Typography>
             <Select
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
               style={{ width: "100%", padding: 8, borderRadius: 4 }}
             >
-              <MenuItem value="">All</MenuItem>
+              <MenuItem value="">{t.projects.filters.all}</MenuItem>
               {years.map((year) => (
                 <MenuItem key={year} value={year}>
                   {year}
@@ -142,15 +148,15 @@ export default function AllProjectsPage() {
             </Select>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle1">Technology</Typography>
+            <Typography variant="subtitle1">
+              {t.projects.filters.technology}
+            </Typography>
             <Select
               value={selectedTechnology}
               onChange={(e) => setSelectedTechnology(e.target.value)}
               style={{ width: "100%", padding: 8, borderRadius: 4 }}
             >
-              <MenuItem value="" style={{ color: "text.main" }}>
-                All
-              </MenuItem>
+              <MenuItem value="">{t.projects.filters.all}</MenuItem>
               {technologies.map((tech) => (
                 <MenuItem key={tech} value={tech}>
                   {tech}
@@ -188,7 +194,7 @@ export default function AllProjectsPage() {
                     align="center"
                     sx={{ marginBottom: 2 }}
                   >
-                    {filteredData.length} projects found
+                    {filteredData.length} {t.projects.filters.found}
                   </Typography>
                 </Grid>
 

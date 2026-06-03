@@ -2,12 +2,11 @@
 import Gallery from "../components/ProjectCard";
 import { Box, Grid, Typography } from "@mui/material";
 import { DataGames } from "../components/projects-data"; // Import the games data
+import { useLanguage } from "../../layout";
 
 export default function GamesPage() {
-  // this data has the title, and 1 array of games with title and image
-  // those are accessed in the Gallery component as Data.title and Data.data
-
-  const title = "My Games 🕹️";
+  const { t } = useLanguage();
+  const title = t.projects.pageTitles.games;
   const Data = DataGames;
 
   return (
@@ -29,7 +28,7 @@ export default function GamesPage() {
             gutterBottom
             align="center"
             sx={{
-              color: "main.primary",
+              color: "text.primary",
               textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
             }}
           >

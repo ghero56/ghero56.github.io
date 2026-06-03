@@ -3,15 +3,8 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Route } from "@mui/icons-material";
-import {
-  DataMisc,
-  DataAI,
-  DataGames,
-  DataHardware,
-  DataSoftware,
-} from "./components/projects-data";
 import Gallery from "./components/ProjectCard";
+import { useLanguage } from "../layout";
 
 // Estilo para la imagen con efecto hover
 const ImageContainer = styled("div")(({ theme }) => ({
@@ -32,30 +25,24 @@ const StyledImg = styled("img")(() => ({
   display: "block",
 }));
 
-function handleImageClick(title) {
-  window.location.href = `/projects/${title}`;
+function handleImageClick(routeKey) {
+  window.location.href = `/projects/${routeKey}`;
 }
 
 const ProjectGallery = () => {
-  const projectImages = [
-    { title: "AI", src: "/images/projects/ai.webp" },
-    { title: "games", src: "/images/projects/games.webp" },
-    { title: "hardware", src: "/images/projects/hw.webp" },
-    { title: "software", src: "/images/projects/sw.webp" },
-    // Añade más imágenes aquí
+  const { t } = useLanguage();
+
+  // key = route segment (/projects/<key>), label comes from the dictionary.
+  const categories = [
+    { key: "AI", src: "/images/projects/ai.webp" },
+    { key: "games", src: "/images/projects/games.webp" },
+    { key: "hardware", src: "/images/projects/hw.webp" },
+    { key: "software", src: "/images/projects/sw.webp" },
   ];
 
-  const allProjectsImg = [
-    ...DataGames,
-    ...DataAI,
-    ...DataMisc,
-    ...DataHardware,
-    ...DataSoftware,
-  ].flatMap((item) =>
-    Array.isArray(item.imgUrl) ? item.imgUrl : [item.imgUrl],
-  );
-
-  console.log(allProjectsImg);
+  // Lightweight cover images only — avoids loading every (heavy, animated)
+  // project image into the landing carousel.
+  const coverImgs = categories.map((c) => c.src);
 
   return (
     <Box
@@ -72,11 +59,11 @@ const ProjectGallery = () => {
         align="center"
         sx={{ marginBottom: "50px" }}
       >
-        Projects 👀
+        {t.projects.title}
       </Typography>
 
       <Grid container spacing={4}>
-        {projectImages.map((project, index) => (
+        {categories.map((cat, index) => (
           <Grid
             item="true"
             xs={12}
@@ -92,8 +79,8 @@ const ProjectGallery = () => {
               padding: "50px",
             }}
           >
-            <ImageContainer onClick={() => handleImageClick(project.title)}>
-              <StyledImg src={project.src} alt={project.title} />
+            <ImageContainer onClick={() => handleImageClick(cat.key)}>
+              <StyledImg src={cat.src} alt={t.projects.cards[cat.key]} />
             </ImageContainer>
           </Grid>
         ))}
@@ -117,8 +104,8 @@ const ProjectGallery = () => {
             showTitle={true}
             data={[
               {
-                title: "All Projects",
-                imgUrl: allProjectsImg,
+                title: t.projects.all,
+                imgUrl: coverImgs,
               },
             ]}
             transitionDuration={3200}
