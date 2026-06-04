@@ -81,6 +81,10 @@ export const translations = {
       comingSoonDesc: "Nuevos y emocionantes eventos llegarán pronto.",
       albumButton: "Ver álbum completo en Google Photos",
       albumNote: "Las fotos completas están en mi álbum de Google Photos.",
+      galleryPrev: "Anterior",
+      galleryNext: "Siguiente",
+      slideshowPlay: "Modo presentación",
+      slideshowPause: "Pausar",
     },
     projects: {
       title: "Proyectos 👀",
@@ -205,6 +209,10 @@ export const translations = {
       comingSoonDesc: "New and awesome events are coming in the near future.",
       albumButton: "View full album on Google Photos",
       albumNote: "The complete photos are in my Google Photos album.",
+      galleryPrev: "Previous",
+      galleryNext: "Next",
+      slideshowPlay: "Slideshow",
+      slideshowPause: "Pause",
     },
     projects: {
       title: "Projects 👀",
@@ -329,6 +337,10 @@ export const translations = {
       comingSoonDesc: "אירועים חדשים ומרגשים בדרך.",
       albumButton: "צפייה באלבום המלא ב-Google Photos",
       albumNote: "התמונות המלאות נמצאות באלבום שלי ב-Google Photos.",
+      galleryPrev: "הקודם",
+      galleryNext: "הבא",
+      slideshowPlay: "מצב מצגת",
+      slideshowPause: "השהיה",
     },
     projects: {
       title: "פרויקטים 👀",

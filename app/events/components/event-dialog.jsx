@@ -24,7 +24,7 @@ const imageSets = { ggj25, ggj26 };
 export const EventDialog = ({ open, onClose, event }) => {
   const { t } = useLanguage();
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
-  const [imageItem, setImageItem] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const imageList = (event && imageSets[event.listType]) || [];
 
@@ -76,7 +76,7 @@ export const EventDialog = ({ open, onClose, event }) => {
               <ImageListItem
                 key={index}
                 onClick={() => {
-                  setImageItem(item);
+                  setSelectedIndex(index);
                   setImageDialogOpen(true);
                 }}
                 sx={{ cursor: "pointer" }}
@@ -91,8 +91,8 @@ export const EventDialog = ({ open, onClose, event }) => {
       <ImageDialog
         open={imageDialogOpen}
         handleClose={() => setImageDialogOpen(false)}
-        image={imageItem?.img}
-        alt={imageItem?.title}
+        images={imageList}
+        startIndex={selectedIndex}
       />
     </Dialog>
   );
