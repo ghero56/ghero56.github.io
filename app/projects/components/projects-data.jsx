@@ -13,6 +13,7 @@ const DataGames = [
     source: "https://github.com/ghero56/Pong.git",
     platform: "DosBox (TASM)",
     year: "August 2021",
+    techs: ["TASM", "Intel 8086"],
   },
   {
     title: "Bubble Game",
@@ -26,6 +27,7 @@ const DataGames = [
     source: "none",
     platform: "Windows",
     year: "April 2023",
+    techs: ["Game Development"],
   },
   {
     title: "curlINGenieros",
@@ -44,6 +46,7 @@ const DataGames = [
     source: "https://ghero56.itch.io/curlingenieros",
     platform: "Windows, (coming soon to Android and Linux)",
     year: "January 2024",
+    techs: ["Unity", "C#"],
   },
   {
     title: "Healthy Meal",
@@ -61,6 +64,7 @@ const DataGames = [
     source: "https://ghero56.itch.io/healthy-meal",
     platform: "Windows",
     year: "2024",
+    techs: ["Unity", "C#"],
   },
   {
     title: "Zombie Invasion",
@@ -75,6 +79,7 @@ const DataGames = [
     source: "none",
     platform: "Windows",
     year: "2023",
+    techs: ["Unreal Engine 5", "C++"],
   },
   {
     title: "Primal Origins",
@@ -89,6 +94,7 @@ const DataGames = [
     source: "https://v3.globalgamejam.org/2023/games/primal-origins-vr-5",
     platform: "Windows, VR (Oculus Quest 2 standalone)",
     year: "January 2023",
+    techs: ["Unity", "C#", "VR"],
   },
   {
     title: "Hostile Behavior",
@@ -102,6 +108,7 @@ const DataGames = [
     source: "/projects/games/hostile-behavior",
     platform: "Windows, Web",
     year: "July 2022",
+    techs: ["Unity", "C#"],
   },
 ];
 
@@ -121,6 +128,7 @@ const DataHardware = [
     source: "https://github.com/ghero56/zedboard-cv",
     platform: "Web (Zynq 7000, ARM, Python)",
     year: "December 2024",
+    techs: ["OpenCV2", "Python", "AMD", "Zynq 7000"],
   },
   {
     title: "3D printer",
@@ -135,6 +143,7 @@ const DataHardware = [
     source: "none",
     platform: "DE 10 Lite (FPGA, INTEL Quartus, ARM)",
     year: "November 2024",
+    techs: ["FPGA", "INTEL Quartus", "ARM", "Hardware Design"],
   },
 ];
 
