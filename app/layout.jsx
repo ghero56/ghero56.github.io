@@ -8,6 +8,9 @@ import SoundToggle from "./components/sound-toggle";
 import FooterGlobal from "./components/footer-global";
 import { darkTheme, lightTheme } from "./styles/global-themes";
 import { createTheme } from "@mui/material/styles";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import rtlPlugin from "stylis-plugin-rtl";
 import { createContext, useContext, useMemo, useState } from "react";
 import Head from "next/head";
 import GoUpButton from "./components/up-button";
@@ -31,6 +34,15 @@ export const useThemeToggle = () => useContext(ThemeToggleContext);
 // Contexto de idioma (ES / EN / HE)
 const LANGS = ["es", "en", "he"];
 const RTL_LANGS = ["he"];
+
+// Emotion caches: LTR (default) and RTL (mirrors margins/padding/floats/etc.
+// via stylis-plugin-rtl). The active cache is chosen by text direction.
+const ltrCache = createCache({ key: "mui", prepend: true });
+const rtlCache = createCache({
+  key: "mui-rtl",
+  prepend: true,
+  stylisPlugins: [rtlPlugin],
+});
 const LanguageContext = createContext();
 
 export const useLanguage = () => useContext(LanguageContext);
@@ -109,20 +121,22 @@ export default function RootLayout({ children }) {
       >
         <ThemeToggleContext.Provider value={{ toggleTheme, mode }}>
           <LanguageContext.Provider value={{ lang, toggleLang, setLang, t }}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <AppBarGlobal />
-              {children}
-              <ThemeButton />
-              <SoundToggle />
+            <CacheProvider value={dir === "rtl" ? rtlCache : ltrCache}>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <AppBarGlobal />
+                {children}
+                <ThemeButton />
+                <SoundToggle />
 
-              <GoUpButton
-                handleScrollUp={handleScrollUp}
-                showGoTop={showGoTop}
-              />
+                <GoUpButton
+                  handleScrollUp={handleScrollUp}
+                  showGoTop={showGoTop}
+                />
 
-              <FooterGlobal />
-            </ThemeProvider>
+                <FooterGlobal />
+              </ThemeProvider>
+            </CacheProvider>
           </LanguageContext.Provider>
         </ThemeToggleContext.Provider>
       </body>

@@ -11,6 +11,7 @@
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.2",
@@ -20,7 +21,8 @@
     "next": "^15.1.6",
     "prettier": "^3.6.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

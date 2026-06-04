@@ -12,11 +12,17 @@ export default function ProjectShowcase({
   title,
   description,
   descriptionEs,
+  descriptionHe,
   images = [],
   externalUrl,
 }) {
   const { t, lang } = useLanguage();
-  const desc = lang === "es" && descriptionEs ? descriptionEs : description;
+  const desc =
+    lang === "es"
+      ? descriptionEs || description
+      : lang === "he"
+        ? descriptionHe || description
+        : description;
 
   return (
     <Container sx={{ py: { xs: 4, md: 6 } }}>
