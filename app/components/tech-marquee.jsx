@@ -1,101 +1,175 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Stack } from "@mui/material";
 import { keyframes } from "@mui/system";
 
-const scrollLeft = keyframes`
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-`;
-const scrollRight = keyframes`
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
-`;
 const drift = keyframes`
-  from { background-position: 0 0, 0 0, 0 0; }
-  to { background-position: -260px 140px, 200px -120px, -120px -80px; }
+  from { background-position: 0 0; }
+  to { background-position: -260px 140px; }
 `;
 const twinkle = keyframes`
   0%, 100% { opacity: 0.55; }
   50% { opacity: 0.85; }
 `;
 
-// Tiled "starfield" built from radial-gradients (deterministic — no random, so
-// it's SSR/hydration-safe). Three layers at different sizes for parallax depth.
-const STAR_LAYERS = [
-  `radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent 100%),
-   radial-gradient(1px 1px at 30% 80%, #cfe0ff, transparent 100%),
-   radial-gradient(1.5px 1.5px at 70% 40%, #fff, transparent 100%),
-   radial-gradient(1px 1px at 88% 75%, #aac4ff, transparent 100%),
-   radial-gradient(1px 1px at 55% 12%, #fff, transparent 100%)`,
-].join(",");
+const STAR_LAYERS = `
+  radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent 100%),
+  radial-gradient(1px 1px at 30% 80%, #cfe0ff, transparent 100%),
+  radial-gradient(1.5px 1.5px at 70% 40%, #fff, transparent 100%),
+  radial-gradient(1px 1px at 88% 75%, #aac4ff, transparent 100%),
+  radial-gradient(1px 1px at 55% 12%, #fff, transparent 100%)`;
 
-// Depth styles: farther = smaller, dimmer, blurred; nearer = larger, sharp, neon.
-const depthStyle = {
-  far: {
-    fontSize: { xs: "0.8rem", md: "0.95rem" },
-    opacity: 0.4,
-    filter: "blur(2.5px)",
-    color: "#9fb6d6",
-    fontWeight: 500,
-  },
-  mid: {
-    fontSize: { xs: "1rem", md: "1.25rem" },
-    opacity: 0.72,
-    filter: "blur(0.7px)",
-    color: "#cfe0f5",
-    fontWeight: 600,
-  },
-  near: {
-    fontSize: { xs: "1.35rem", md: "1.8rem" },
+// Depth tiers: farther = smaller, dimmer, blurred; nearer = larger, sharp, neon.
+const DEPTHS = [
+  { size: 0.85, opacity: 0.32, blur: 2.8, weight: 500, color: "#8fa9cf" },
+  { size: 1.05, opacity: 0.52, blur: 1.6, weight: 600, color: "#a9c1e6" },
+  { size: 1.3, opacity: 0.76, blur: 0.6, weight: 700, color: "#d4e3f7" },
+  {
+    size: 1.7,
     opacity: 1,
-    filter: "none",
+    blur: 0,
+    weight: 800,
     color: "#ffffff",
-    fontWeight: 800,
-    textShadow:
-      "0 0 10px rgba(87,143,202,0.9), 0 0 22px rgba(54,116,181,0.6)",
+    glow: true,
   },
-};
+];
 
-const DEPTH_PATTERN = ["mid", "near", "far", "near", "mid", "far", "near", "mid"];
+const DEFAULT_TECHS = [
+  "Unity", "C#", "Unreal Engine", "C++", "Python", "Flask", "PHP", "MySQL",
+  "React", "Next.js", "Node.js", "Git & GitHub", "OpenGL", "Blender",
+  "TensorFlow", "OpenCV", "Java", "CI/CD", "Agile", "VR",
+];
 
-function Row({ items, duration, reverse }) {
-  const row = [...items, ...items];
-  return (
-    <Box
-      sx={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: { xs: 3, md: 5 },
-        whiteSpace: "nowrap",
-        willChange: "transform",
-        animation: `${reverse ? scrollRight : scrollLeft} ${duration}s linear infinite`,
-      }}
-    >
-      {row.map((it, i) => (
-        <Box
-          key={i}
-          component="span"
-          sx={{
-            ...depthStyle[it.depth],
-            fontFamily: "var(--font-geist-mono), monospace",
-            letterSpacing: 1,
-            userSelect: "none",
-          }}
-        >
-          {it.label}
-        </Box>
-      ))}
-    </Box>
-  );
-}
+const ROW_SPEEDS = [42, 30, 54]; // px/s per lane (different speeds)
+const ROW_DIRS = [-1, 1, -1]; // travel direction per lane
+const rand = (a, b) => a + Math.random() * (b - a);
+const pick = (arr) => arr[(Math.random() * arr.length) | 0];
 
+// Infinite recycling marquee: each lane continuously spawns randomly-chosen
+// tech labels at random depths and gaps, moves them via rAF, and REMOVES the
+// DOM nodes once they leave the screen so the node count stays bounded.
 export default function TechMarquee({ items }) {
-  // Split into 3 rows and assign a deterministic depth to each item.
-  const rows = [[], [], []];
-  items.forEach((label, i) => {
-    rows[i % 3].push({ label, depth: DEPTH_PATTERN[i % DEPTH_PATTERN.length] });
-  });
+  const pool = items && items.length ? items : DEFAULT_TECHS;
+  const row0 = useRef(null);
+  const row1 = useRef(null);
+  const row2 = useRef(null);
+  const poolRef = useRef(pool);
+  poolRef.current = pool;
+
+  useEffect(() => {
+    const rows = [row0, row1, row2].map((ref, i) => ({
+      el: ref.current,
+      dir: ROW_DIRS[i],
+      speed: ROW_SPEEDS[i],
+      items: [],
+      frontier: 0,
+      inited: false,
+    }));
+
+    const makeItem = (row) => {
+      const depth = pick(DEPTHS);
+      const span = document.createElement("span");
+      span.textContent = pick(poolRef.current);
+      Object.assign(span.style, {
+        position: "absolute",
+        top: "50%",
+        left: "0",
+        whiteSpace: "nowrap",
+        fontFamily: "var(--font-geist-mono), monospace",
+        letterSpacing: "1px",
+        userSelect: "none",
+        pointerEvents: "none",
+        fontSize: `${depth.size}rem`,
+        fontWeight: String(depth.weight),
+        opacity: String(depth.opacity),
+        color: depth.color,
+        filter: depth.blur ? `blur(${depth.blur}px)` : "none",
+        textShadow: depth.glow
+          ? "0 0 10px rgba(87,143,202,0.9), 0 0 22px rgba(54,116,181,0.6)"
+          : "none",
+        willChange: "transform",
+      });
+      row.el.appendChild(span);
+      return { el: span, width: span.offsetWidth, x: 0, gap: rand(36, 150) };
+    };
+
+    const place = (it, x) => {
+      it.x = x;
+      it.el.style.transform = `translate(${x}px, -50%)`;
+    };
+
+    const prefill = (row, cw) => {
+      if (row.dir < 0) {
+        let x = 0;
+        while (x < cw + 200) {
+          const it = makeItem(row);
+          place(it, x);
+          row.items.push(it);
+          x += it.width + it.gap;
+        }
+        row.frontier = x;
+      } else {
+        let x = cw;
+        while (x > -200) {
+          const it = makeItem(row);
+          place(it, x - it.width);
+          row.items.push(it);
+          x -= it.width + it.gap;
+        }
+        row.frontier = x;
+      }
+      row.inited = true;
+    };
+
+    let raf;
+    let last = performance.now();
+    const frame = (now) => {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      for (const row of rows) {
+        if (!row.el) continue;
+        const cw = row.el.clientWidth;
+        if (!row.inited) {
+          if (cw > 0) prefill(row, cw);
+          continue;
+        }
+        const dx = row.dir * row.speed * dt;
+        row.frontier += dx;
+        for (const it of row.items) place(it, it.x + dx);
+        // recycle: drop nodes that fully left the screen
+        row.items = row.items.filter((it) => {
+          const off = row.dir < 0 ? it.x + it.width < -40 : it.x > cw + 40;
+          if (off) row.el.removeChild(it.el);
+          return !off;
+        });
+        // keep the lane filled
+        if (row.dir < 0) {
+          while (row.frontier < cw) {
+            const it = makeItem(row);
+            place(it, row.frontier);
+            row.items.push(it);
+            row.frontier += it.width + it.gap;
+          }
+        } else {
+          while (row.frontier > 0) {
+            const it = makeItem(row);
+            place(it, row.frontier - it.width);
+            row.items.push(it);
+            row.frontier -= it.width + it.gap;
+          }
+        }
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      rows.forEach((row) => {
+        if (row.el) row.el.replaceChildren();
+      });
+    };
+  }, []);
 
   return (
     <Box
@@ -112,7 +186,6 @@ export default function TechMarquee({ items }) {
       }}
       aria-label="Technologies"
     >
-      {/* starfield */}
       <Box
         sx={{
           position: "absolute",
@@ -124,10 +197,18 @@ export default function TechMarquee({ items }) {
           pointerEvents: "none",
         }}
       />
-      <Stack spacing={{ xs: 2, md: 3 }} sx={{ position: "relative" }}>
-        <Row items={rows[0]} duration={38} />
-        <Row items={rows[1]} duration={54} reverse />
-        <Row items={rows[2]} duration={46} />
+      <Stack spacing={{ xs: 1.5, md: 2.5 }} sx={{ position: "relative" }}>
+        {[row0, row1, row2].map((ref, i) => (
+          <Box
+            key={i}
+            ref={ref}
+            sx={{
+              position: "relative",
+              height: { xs: 38, md: 50 },
+              overflow: "hidden",
+            }}
+          />
+        ))}
       </Stack>
     </Box>
   );
