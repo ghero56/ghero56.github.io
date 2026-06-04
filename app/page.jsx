@@ -31,7 +31,9 @@ const acrylicCard = (theme) => ({
   backdropFilter: "blur(12px)",
   WebkitBackdropFilter: "blur(12px)",
   border: `1px solid ${alpha(theme.palette.primary.main, 0.25)}`,
-  borderRadius: 12,
+  // NOTE: in MUI sx, a numeric borderRadius is multiplied by theme.shape.borderRadius.
+  // Use an explicit unit string for a literal value. Override per-card below.
+  borderRadius: "1.0rem",
   transition: "transform 0.25s, box-shadow 0.25s, border-color 0.25s",
   "&:hover": {
     transform: "translateY(-6px)",
@@ -317,7 +319,7 @@ export default function Home() {
       </Box>
 
       {/* CERTIFICATIONS */}
-      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
+      <Container fixed maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <Typography variant="h4" fontWeight={800} align="center" gutterBottom>
           {h.certsTitle}
         </Typography>
